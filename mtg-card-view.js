@@ -1,7 +1,7 @@
 ﻿/**
 * Magic The Gathering Card View
 *
-* Create ling to MTG cards just by their name including a mouse over
+* Create links to MTG cards just by their name including a mouse over
 * previewing an image of the card.
 *
 * Requirements:
@@ -14,7 +14,7 @@
 *
 *   The link location and the preview are created just by the link text.
 *   Make sure it's the name of a valid type. After the DOM loaded just call
-*   the function to the ready handler.
+*   the function from the ready handler.
 */
 
 var createMtgCardViewLinks = function() {
@@ -36,7 +36,11 @@ var createMtgCardViewLinks = function() {
     // add mouse over
     self.hover( function(e) {
         // display card preview
-        $('body').append("<p id='mtg-card-view-image'><img src='"+ cardImage +"' /></p>");
+        var cardDiv = "<div id='mtg-card-view-image'><img src='"
+          + cardImage +
+          "' /></div>";
+        
+        $('body').append(cardDiv);
         $('#mtg-card-view-image')
             .css('top',(e.pageY - 20) + 'px')
             .css('left',(e.pageX + 20) + 'px')
