@@ -1,18 +1,22 @@
 ﻿/**
 * Magic The Gathering Card View
 *
-* Create links to MTG cards just by their name including a mouse over
+* Create links to MTG cards just by their name or multiverse ID including a mouse over
 * previewing an image of the card.
 *
 * Requirements:
 *   - jQuery
 *
 * How to:
-*   Just add links to your HTML of the follow format:
+*   Just add links to your HTML of the following formats:
 *
-*     <a class="mtg-card-view-link" href="">Guardian Seraph</a>
+*   1. By name
+*       <a class="mtg-card-view-link" mtg-multiverse-id="129643" href="">Multiverse ID 129643</a>
 *
-*   The link location and the preview are created just by the link text.
+*   2. By multiverse ID
+*       <a class="mtg-card-view-link" mtg-multiverse-id="129643" href="">Multiverse ID 129643</a>
+*
+*   The link location and the preview are created just by the link attributes.
 *   Make sure it's the name of a valid type. After the DOM loaded just call
 *   the function from the ready handler.
 */
@@ -20,26 +24,47 @@
 var createMtgCardViewLinks = function() {
 
   // Urls to the gatherer site from wizards.
-  var linkUrl = 'http://gatherer.wizards.com/Pages/Search/Default.aspx?name=';
-  var imageUrl = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=';
+  var urlBase     = 'http://gatherer.wizards.com';
+  var linkUrlName = urlBase + '/Pages/Search/Default.aspx?name=';
+  var imageUrlName = urlBase + '/Handlers/Image.ashx?type=card&name=';
+  var linkUrlId   = urlBase + '/Pages/Search/Default.aspx?multiverseid=';
+  var imageUrlId  = urlBase + '/Handlers/Image.ashx?type=card&multiverseid=';
 
   // cycle through all mtg-card-view-link
   $('a.mtg-card-view-link').each( function(i) {
 
      // set all card links
     var self = $(this);
-    var cardName = self.text().trim();
-    var cardUrl = linkUrl + '+[' + cardName + ']';
-    var cardImage = imageUrl + cardName;
-    self.attr('href', cardUrl);
+
+    var cardName = self.attr( 'mtg-card-name' );
+    var cardId = self.attr( 'mtg-multiverse-id' );
+
+    function createUrls() {
+        var url = {};
+
+        if( cardName ) {
+            url.image = imageUrlName + cardName;
+            url.gatherer = linkUrlName + '+[' + cardName + ']';
+        } else {
+            url.image = imageUrlId + cardId;
+            url.gatherer = linkUrlId + cardId;
+        }
+        return url;
+    }
+
+    var cardUrl = createUrls();
+
+    console.log('cardUrl: ', JSON.stringify(cardUrl));
+
+    self.attr('href', cardUrl.gatherer);
 
     // add mouse over
     self.hover( function(e) {
         // display card preview
         var cardDiv = "<div id='mtg-card-view-image'><img src='"
-          + cardImage +
+          + cardUrl.image +
           "' /></div>";
-        
+
         $('body').append(cardDiv);
         $('#mtg-card-view-image')
             .css('top',(e.pageY - 20) + 'px')

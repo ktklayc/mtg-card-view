@@ -3,7 +3,7 @@
 <head>
 <title>MTG Card View Demo</title>
 <script src="mtg-card-view.js"></script>
-<script src="jquery-1.8.0.min.js"></script>
+<script src="jquery-1.9.0.min.js"></script>
 
 <script>
   $(document).ready( function() {
@@ -12,19 +12,23 @@
     createMtgCardViewLinks();
 });
 </script>
-
-
 </head>
 <body>
-    <div>Just add links with the card&apos;s name.</div>
-
-    <a class="mtg-card-view-link" href="">Millstone</a>
+    <div>Just add links with the setting either the card name or the multiverse ID.</div>
 
     <div>
-    <a class="mtg-card-view-link" href="">Island</a>
+    <a class="mtg-card-view-link" mtg-multiverse-id="129643" href="">Multiverse ID 129643</a>
     </div>
 
-    <a class="mtg-card-view-link" href="">Guardian Seraph</a>
-    <a class="mtg-card-view-link" href="">Sigil Of The Empty Throne </a>
+    <div>
+    <a class="mtg-card-view-link" mtg-card-name="Island" href="">Island</a>
+    </div>
+
+    <div>
+    <a class="mtg-card-view-link" href="" mtg-card-name="Guardian Seraph">Guardian Seraph</a>
+    </div>
+    <div>
+    <a class="mtg-card-view-link" href="" mtg-card-name="Sigil Of The Empty Throne">Sigil Of The Empty Throne</a>
+    </div>
 </body>
 </html>
