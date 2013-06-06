@@ -11,7 +11,7 @@
 *   Just add links to your HTML of the following formats:
 *
 *   1. By name
-*       <a class="mtg-card-view-link" mtg-multiverse-id="129643" href="">Multiverse ID 129643</a>
+*       <a class="mtg-card-view-link" href="" mtg-card-name="Guardian Seraph">Guardian Seraph</a>
 *
 *   2. By multiverse ID
 *       <a class="mtg-card-view-link" mtg-multiverse-id="129643" href="">Multiverse ID 129643</a>
